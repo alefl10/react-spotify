@@ -20,3 +20,12 @@
 .App-link {
   color: #09d3ac;
 }
+
+body {
+    background: #282c34;
+}
+
+h1 {
+    font-size: 54px;
+    color: #eeeeee;
+}
