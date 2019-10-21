@@ -1,31 +1,38 @@
 import React, { Component } from 'react';
 import './App.css';
-import { all } from 'q';
 
 const defaultStyle = { color: '#fff' };
 const fakeServerData = {
 	user: {
 		name: 'Alejandro',
 		playlists: [
-			{ songs: [
-				{name: 'Beat it', duration: 2},
-				{name: 'Something', duration: 2},
-				{name: 'Another one', duration: 2},
+			{
+				name: 'MadeUp',
+				songs: [
+					{name: 'Beat it', duration: 2},
+					{name: 'Something', duration: 2},
+					{name: 'Another one', duration: 2},
 			]},
-			{ songs: [
-				{name: 'Young blood', duration: 2},
-				{name: 'Hello', duration: 2},
-				{name: 'Goodbye', duration: 2},
+			{
+				name: 'Feels',
+				songs: [
+					{name: 'Young blood', duration: 2},
+					{name: 'Hello', duration: 2},
+					{name: 'Goodbye', duration: 2},
 			]},
-			{ songs: [
-				{name: 'Here', duration: 2},
-				{name: 'Nowhere', duration: 2},
-				{name: 'There', duration: 2},
+			{
+				name: 'Chill',
+				songs: [
+					{name: 'Here', duration: 2},
+					{name: 'Nowhere', duration: 2},
+					{name: 'There', duration: 2},
 			]},
-			{ songs: [
-				{name: 'Yeah!', duration: 2},
-				{name: 'Nope', duration: 2},
-				{name: 'Maybe', duration: 2},
+			{
+				name: 'Boom!',
+				songs: [
+					{name: 'Yeah!', duration: 2},
+					{name: 'Nope', duration: 2},
+					{name: 'Maybe', duration: 2},
 			]},
 		],
 	},
@@ -48,7 +55,6 @@ class HoursCounter extends Component {
 	render() {
 		const allSongs = this.props.playlists.reduce((songsArray, playlist) => songsArray.concat(playlist.songs), []);
 		const totalDuration = allSongs.reduce((sum, song) => sum + song.duration, 0) 
-		console.log(allSongs);
 		return (
 			<div
 				style={{ width: '40%', display: 'inline-block' }}
@@ -73,21 +79,19 @@ class Filter extends Component {
 
 class Playlist extends Component {
 	render() {
+		const { name: playlistName } = this.props;
 		return (
 			<div style={{ ...defaultStyle, width: '25%', display: 'inline-block' }}>
 				<img src="" alt="" />
-				<h3>Playlist Name</h3>
+				<h3>{playlistName}</h3>
 				<ul>
-					<li>
-						Song 1
+				{this.props.songs.map(song =>(
+					<li key={`${playlistName}_${song.name}`}>
+						{song.name}
 					</li>
-					<li>
-						Song 2
-					</li>
-					<li>
-						Song 3
-					</li>
+				))}
 				</ul>
+				
 			</div>
 		);
 	}
@@ -117,9 +121,9 @@ class App extends Component {
 					<PlaylistCounter playlists={this.state.serverData && this.state.serverData.user.playlists} />
 					<HoursCounter playlists={this.state.serverData && this.state.serverData.user.playlists}/>
 					<Filter />
-					<Playlist />
-					<Playlist />
-					<Playlist />
+					{this.state.serverData.user.playlists.map(playlist => 
+						<Playlist key={playlist.name} name={playlist.name} songs={playlist.songs} />
+					)}
 				</div>
 				: <h1 style={defaultStyle}>Loading...</h1>
 				}
