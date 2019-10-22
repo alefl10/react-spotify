@@ -114,6 +114,13 @@ class App extends Component {
 	}
 
 	render() {
+		const playlistsToRender = this.state.serverData ? this.state.serverData.user.playlists
+			.filter(playlist => 
+				playlist.name.toLowerCase()
+					.includes(this.state.filterString.toLocaleLowerCase())
+			)
+			: [];
+
 		return (
 			<div className="App">
 				{this.state.serverData ?
@@ -121,15 +128,10 @@ class App extends Component {
 					<h1 style={{ ...defaultStyle, fontSize: '54px' }}>
 					{this.state.serverData.user.name}' Playlist
 					</h1>
-					<PlaylistCounter playlists={this.state.serverData && this.state.serverData.user.playlists} />
-					<HoursCounter playlists={this.state.serverData && this.state.serverData.user.playlists}/>
+					<PlaylistCounter playlists={playlistsToRender} />
+					<HoursCounter playlists={playlistsToRender}/>
 					<Filter onTextChange={text => this.setState({ filterString: text })} />
-					{this.state.serverData.user.playlists
-					.filter(playlist => 
-						playlist.name.toLowerCase()
-							.includes(this.state.filterString.toLocaleLowerCase())
-					)
-					.map(playlist => 
+					{playlistsToRender.map(playlist => 
 						<Playlist key={playlist.name} name={playlist.name} songs={playlist.songs} />
 					)}
 				</div>
