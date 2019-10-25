@@ -3,7 +3,7 @@ import React from 'react'
 export default function Playlist({playlist}) {
     return (
         <div className="col-12 col-md-6 col-lg-4 mx-auto">
-            <div className="card">
+            <div className="card mb-3">
                     <img src={playlist.imageUrl} className="card-img-top" alt=""/>
                     <div className="card-body">
                         <h3>{playlist.name}</h3>

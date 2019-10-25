@@ -7,7 +7,7 @@ export default function HoursCounter(props) {
 		const totalDuration = allSongs.reduce((sum, song) => sum + song.duration, 0) 
 		return (
 			<div className="aggregate">
-				<h2 style={{ ...defaultStyle }}>{totalDuration} hours</h2>
+				<h2 style={{ ...defaultStyle }}>{parseInt(totalDuration)} hours</h2>
 			</div>
 		);
 }
